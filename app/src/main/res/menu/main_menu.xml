@@ -5,27 +5,23 @@
 
     <group>
         <item
-            android:id="@+id/favourites_item"
+            android:id="@+id/nav_home"
             android:icon="@drawable/person"
-            android:title="Account"
-            android:checkable="true"/>
+            android:title="Account"/>
         <item
             android:id="@+id/inbox_item"
             android:icon="@drawable/pisssss"
-            android:title="Shop"
-            android:checkable="true"/>
+            android:title="Shop"/>
     </group>
 
     <group>
         <item
-            android:id="@+id/label_one"
+            android:id="@+id/settings"
             android:icon="@drawable/westernya"
-            android:title="Settings"
-            android:checkable="true"/>
+            android:title="Settings"/>
         <item
-            android:id="@+id/label_two"
+            android:id="@+id/about"
             android:icon="@drawable/vnimanie"
-            android:title="About us"
-            android:checkable="true"/>
+            android:title="About us"/>
     </group>
 </menu>
