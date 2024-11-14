@@ -47,12 +47,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when(item.itemId){
             R.id.nav_home -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment, HomeFragment()).commit()
-            R.id.inbox_item -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, HomeFragment()).commit()
-            R.id.settings -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, SettingsFragment()).commit()
+            R.id.shop -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, ShopFragment()).commit()
+            R.id.history -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, HistoryFragment()).commit()
+            R.id.partners -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, PartnersFragment()).commit()
             R.id.about -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment, AboutFragment()).commit()
+            R.id.close -> {
+                finish()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true

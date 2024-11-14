@@ -7,21 +7,26 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/person"
-            android:title="Account"/>
+            android:title="Home"/>
         <item
-            android:id="@+id/inbox_item"
+            android:id="@+id/shop"
             android:icon="@drawable/pisssss"
             android:title="Shop"/>
-    </group>
-
-    <group>
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/westernya"
-            android:title="Settings"/>
+            android:id="@+id/history"
+            android:icon="@drawable/history"
+            android:title="Skins History"/>
+        <item
+            android:id="@+id/partners"
+            android:icon="@drawable/partners"
+            android:title="Partners and Sponsors"/>
         <item
             android:id="@+id/about"
             android:icon="@drawable/vnimanie"
             android:title="About us"/>
+        <item
+            android:id="@+id/close"
+            android:icon="@drawable/quit"
+            android:title="Quit"/>
     </group>
 </menu>

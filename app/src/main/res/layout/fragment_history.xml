@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HistoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@drawable/arcane"
+        android:gravity="bottom"
+        android:padding="20dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily=""
+            android:text="LoviCS"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily=""
+            android:text="Skins History"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="24dp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Скины для оружия в Counter-Strike стали неотъемлемой частью игры, начиная с первого появления их в CS
+в 2013 году. \nОднако путь к появлению скинов был не таким простым и начался задолго до этого.
+
+\n\nКак все началось? \nИдея добавить кастомизацию внешнего вида оружия пришла разработчикам Valve как способ разнообразить игру и предоставить игрокам больше возможностей для выражения себя в рамках виртуального мира. Первоначально скины были доступны через Steam Market и эксклюзивные кейсы, которые могли выпадать в процессе игры.
+
+\n\nВажные моменты в истории скинов:
+
+\n2013 год: \nПоявление скинов в CS
+— это был революционный шаг для всей серии. Игроки получили возможность собирать коллекции скинов и обмениваться ими.
+\n2014 год: \nValve представила кейсы, которые можно было открывать с помощью ключей, давая игрокам шанс получить редкие и ценные скины.
+\n2016 год: \nВведение системы Trade Up Contracts позволило игрокам обменивать свои скины на более редкие и ценные.
+\n2018 год: \nРазвитие рынка скинов стало одной из самых популярных частей игры, с огромным количеством трейдов и покупок через платформу Steam.
+\n\nПочему скины так популярны? \nСкины стали важным элементом не только для персонализации, но и для культурного аспекта игры. Многие коллекционеры начинают собирать редкие и ограниченные скины, а также участвуют в торговле, создавая целый рынок. В свою очередь, скины дают игрокам возможность создать уникальный стиль и выделяться среди других.
+С каждым годом скины становятся всё более ценными, а некоторые из них становятся настоящими произведениями искусства в мире CS"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

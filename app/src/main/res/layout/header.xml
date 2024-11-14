@@ -8,14 +8,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:padding="20dp">
 
-    <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
         android:text="LoviCS"
         android:textColor="@color/white"
         android:textSize="32dp"/>
@@ -23,9 +19,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
         android:text="CS2 skin store"
         android:textColor="@color/white"
-        android:textSize="18dp"/>
+        android:textSize="24dp"/>
 
 </LinearLayout>

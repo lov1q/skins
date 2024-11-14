@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@drawable/arcane"
+        android:gravity="bottom"
+        android:padding="20dp">
 
-</RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily=""
+            android:text="LoviCS"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily=""
+            android:text="About Us"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="24dp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Добро пожаловать в наше приложение, созданное специально для всех фанатов CS2!\n\nМы понимаем, как важен стиль и индивидуальность в каждой игре, поэтому предлагаем вам широкий выбор скинов для вашего оружия и снаряжения.
+Наше приложение — это удобная платформа для покупки, обмена и управления вашими скинами. Мы стремимся создать безопасное и надежное пространство для всех сделок, обеспечивая простоту использования и защиту каждого пользователя.
+\n\nНаши особенности:
+\nБезопасные транзакции: Мы обеспечиваем безопасность всех операций.
+\nШирокий ассортимент: Скины на любой вкус и бюджет.
+\nПростота и удобство: Быстро находите и покупайте желаемые предметы.
+\nПрисоединяйтесь к нашему сообществу и сделайте свою игру уникальной!"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -13,23 +13,27 @@
         android:theme="@style/Base.Theme.Skins"
         tools:targetApi="31">
         <activity
-            android:name=".Registration"
-            android:exported="false" />
-        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
+            android:name=".Registration"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:theme="@style/Base.Theme.Skins"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".author"
+            android:exported="true"
+            android:theme="@style/Base.Theme.Skins">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
         </activity>
     </application>
 

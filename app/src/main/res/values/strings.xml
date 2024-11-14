@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name">skins</string>
+    <string name="app_name">LoviCS2</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="app_namee">Navigation Drawer</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string-array name="combo">
+        <item>Прямо с завода</item>
+        <item>Немного поношенный</item>
+        <item>После полевых испытаний</item>
+        <item>Поношенное</item>
+        <item>Закаленное в боях</item>
+    </string-array>
 </resources>
