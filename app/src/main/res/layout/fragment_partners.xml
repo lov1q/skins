@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@drawable/arcane"
+        android:background="@drawable/src"
         android:gravity="bottom"
         android:padding="20dp">
 
@@ -18,27 +18,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily=""
-            android:text="LoviCS"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="32dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily=""
+            android:fontFamily="@font/nunitobold"
             android:text="Partners and Sponsors"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="24dp"/>
+            android:textSize="32dp"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycleView"
-        android:layout_marginTop="12dp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll"
+        android:background="@drawable/ppp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycleView"
+            android:layout_marginTop="12dp"/>
+
+    </ScrollView>
 </LinearLayout>

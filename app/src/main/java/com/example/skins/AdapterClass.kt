@@ -15,6 +15,7 @@ class AdapterClass(private val dataList: ArrayList<DataClass>): RecyclerView.Ada
         val currentItem = dataList[position]
         holder.rvImage.setImageResource(currentItem.dataImage)
         holder.rvTitle.text = currentItem.dataTitle
+        holder.rvLink.text = currentItem.dataLink
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
@@ -29,5 +30,6 @@ class AdapterClass(private val dataList: ArrayList<DataClass>): RecyclerView.Ada
     class ViewHolderClass(itemView: View): RecyclerView.ViewHolder(itemView){
         val rvImage: ImageView = itemView.findViewById(R.id.image)
         val rvTitle: TextView = itemView.findViewById(R.id.title)
+        val rvLink: TextView = itemView.findViewById(R.id.link)
     }
 }

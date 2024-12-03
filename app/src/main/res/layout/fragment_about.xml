@@ -11,34 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@drawable/arcane"
+        android:background="@drawable/src"
         android:gravity="bottom"
         android:padding="20dp">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily=""
-            android:text="LoviCS"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="32dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily=""
+            android:fontFamily="@font/nunitobold"
             android:text="About Us"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="24dp"/>
+            android:textSize="32dp"/>
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@drawable/ppp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -49,14 +45,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Добро пожаловать в наше приложение, созданное специально для всех фанатов CS2!\n\nМы понимаем, как важен стиль и индивидуальность в каждой игре, поэтому предлагаем вам широкий выбор скинов для вашего оружия и снаряжения.
-Наше приложение — это удобная платформа для покупки, обмена и управления вашими скинами. Мы стремимся создать безопасное и надежное пространство для всех сделок, обеспечивая простоту использования и защиту каждого пользователя.
-\n\nНаши особенности:
-\nБезопасные транзакции: Мы обеспечиваем безопасность всех операций.
-\nШирокий ассортимент: Скины на любой вкус и бюджет.
-\nПростота и удобство: Быстро находите и покупайте желаемые предметы.
-\nПрисоединяйтесь к нашему сообществу и сделайте свою игру уникальной!"
-                android:textSize="16sp" />
+                android:id="@+id/text"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nunitobold"
+                android:text=""
+                android:textSize="17dp" />
 
         </LinearLayout>
     </ScrollView>

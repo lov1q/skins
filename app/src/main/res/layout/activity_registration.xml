@@ -5,13 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ppp"
     tools:context=".Registration">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@drawable/arcane"
+        android:background="@drawable/src"
         android:gravity="bottom"
         android:padding="20dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily=""
+            android:fontFamily="@font/nunitobold"
             android:text="LoviCS"
             android:textColor="@color/white"
             android:textSize="32dp" />
@@ -34,11 +35,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily=""
+            android:fontFamily="@font/nunitobold"
             android:text="CS2 skin store"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="24dp"/>
+            android:textSize="20dp"/>
 
     </LinearLayout>
 
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Registration"
+        android:fontFamily="@font/nunitobold"
         android:textColor="@color/black"
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/textFieldlogin"
@@ -69,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="23dp"
+            android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
         </com.google.android.material.textfield.TextInputEditText>
@@ -87,6 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="23dp"
+            android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
         </com.google.android.material.textfield.TextInputEditText>
@@ -105,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="23dp"
+            android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
         </com.google.android.material.textfield.TextInputEditText>
@@ -123,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="23dp"
+            android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
         </com.google.android.material.textfield.TextInputEditText>
@@ -133,6 +139,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:text="Sign Up"
+        android:fontFamily="@font/nunitobold"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/textFieldSecPassword"
         app:layout_constraintHorizontal_bias="0.497"
@@ -145,6 +152,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:text="Back"
+        android:fontFamily="@font/nunitobold"
         android:onClick="back"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
