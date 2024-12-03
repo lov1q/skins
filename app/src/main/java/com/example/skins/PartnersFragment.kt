@@ -41,7 +41,7 @@ class PartnersFragment : Fragment() {
         list.add(DataClass(
             R.drawable.lisskins,
             "Lis-skins",
-            "https://lis-skins.com/ru/market/cs2/"
+            "https://lis-skins.com/ru/market"
         ))
         list.add(DataClass(
             R.drawable.csmoney,
@@ -52,6 +52,11 @@ class PartnersFragment : Fragment() {
             R.drawable.gg2,
             "G2",
             "https://g2esports.com/"
+        ))
+        list.add(DataClass(
+            R.drawable.cccloud,
+            "Cloud9",
+            "https://cloud9.gg/"
         ))
         return list
     }
