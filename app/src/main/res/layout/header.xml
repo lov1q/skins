@@ -12,15 +12,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LoviCS"
+        android:text="Menu"
+        android:fontFamily="@font/nunitobold"
         android:textColor="@color/white"
-        android:textSize="32dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CS2 skin store"
-        android:textColor="@color/white"
-        android:textSize="24dp"/>
+        android:textSize="40dp"/>
 
 </LinearLayout>

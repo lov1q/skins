@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Изображение в элементе списка -->
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop" />
+
+        <!-- Заголовок элемента -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item Title"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:paddingTop="8dp"
+            android:gravity="start" />
+
+        <!-- Первый текст (например, ссылка) -->
+        <TextView
+            android:id="@+id/exterior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item Description"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:paddingTop="4dp"
+            android:gravity="start" />
+
+        <!-- Новый текст (например, дополнительное описание) -->
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Additional Info"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:gravity="start" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

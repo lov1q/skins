@@ -48,6 +48,11 @@ class PartnersFragment : Fragment() {
             "CS.MONEY",
             "https://tradeit.gg/ru/csgo/store"
         ))
+        list.add(DataClass(
+            R.drawable.gg2,
+            "G2",
+            "https://g2esports.com/"
+        ))
         return list
     }
 }
