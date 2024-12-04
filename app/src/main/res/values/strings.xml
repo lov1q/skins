@@ -9,6 +9,7 @@
     <string name="registration">Registration</string>
     <string name="autor">Authorization</string>
     <string name="login">Login</string>
+    <string name="permid">Permanent ID:</string>
     <string name="email">Email</string>
     <string name="pass">Password</string>
     <string name="signin">Sign In</string>
@@ -18,6 +19,7 @@
     <string name="search">Поиск...</string>
     <string name="quality">Качество</string>
     <string name="trade">Trade URL:</string>
+    <string name="inventory">Your Inventory:</string>
     <string name="changeava">Change Avatar</string>
     <string name="send">Send</string>
     <string name="signupnow">Sign Up Now</string>

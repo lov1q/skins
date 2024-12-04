@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.skins.AdapterSkins.ViewHolderClass
 
-class AdapterSkins (private val dataList: ArrayList<Skins>): RecyclerView.Adapter<AdapterSkins.ViewHolderClass>() {
-
+class AdapterInventory (private val dataList: ArrayList<YourinventClass>): RecyclerView.Adapter<AdapterInventory.ViewHolderClass>() {
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
