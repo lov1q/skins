@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, HomeFragment()).commit()
-            navigationView.setCheckedItem(R.id.nav_home)
+                .replace(R.id.fragment, ShopFragment()).commit()
+            navigationView.setCheckedItem(R.id.shop)
         }
     }
 

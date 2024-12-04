@@ -65,8 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:id="@+id/collection2"
                     android:textColor="@color/white"
-                    android:text="Износ" />
+                    android:text="Коллекция" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -81,6 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:id="@+id/gun2"
                     android:textColor="@color/white"
                     android:text="Оружие" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -238,6 +240,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="5dp"
                 android:id="@+id/recycleView"
                 android:layout_marginTop="12dp"/>
 
