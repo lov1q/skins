@@ -13,6 +13,9 @@
     <string name="pass">Password</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
+    <string name="trade">Trade URL:</string>
+    <string name="changeava">Change Avatar</string>
+    <string name="send">Send</string>
     <string name="signupnow">Sign Up Now</string>
     <string name="back">Back</string>
     <string name="lovics">LoviCS</string>
