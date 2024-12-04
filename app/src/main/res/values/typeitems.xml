@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dropdown_items">
+        <item>Agent</item>
+        <item>Charm</item>
+        <item>Rifle</item>
+        <item>Graffiti</item>
+        <item>Shotgun</item>
+        <item>Tool</item>
+        <item>Container</item>
+        <item>Music Kit</item>
+        <item>Sticker</item>
+        <item>Patch</item>
+        <item>Knife</item>
+        <item>Gloves</item>
+        <item>Pistol</item>
+        <item>SMG</item>
+        <item>Gift</item>
+        <item>Pass</item>
+        <item>Machinegun</item>
+        <item>Sniper Rifle</item>
+        <item>Equipment</item>
+        <item>Souvenir</item>
+        <item>Tag</item>
+    </string-array>
+</resources>

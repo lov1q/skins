@@ -38,18 +38,20 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textColorHint="@color/white"
-            android:hint="Search">
+            android:hint="@string/search">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nunitobold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Горизонтальный блок для ComboBox -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,9 +67,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:id="@+id/collection2"
+                    android:id="@+id/collection1"
+                    android:fontFamily="@font/nunitobold"
                     android:textColor="@color/white"
-                    android:text="Коллекция" />
+                    android:text="@string/type" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,153 +85,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:id="@+id/gun2"
+                    android:id="@+id/gun1"
+                    android:fontFamily="@font/nunitobold"
                     android:textColor="@color/white"
                     android:text="Оружие" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
 
-        <!-- Горизонтальный блок для двух списков -->
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:layout_marginTop="5dp">
 
-            <!-- Первый список (Износ) -->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:id="@+id/exterior"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:paddingStart="20dp">
 
-                <TextView
-                    android:id="@+id/text"
-                    android:layout_width="wrap_content"
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/nunitobold"
-                    android:text="Износ:"
-                    android:textSize="20sp" />
-
-                <CheckBox
-                    android:id="@+id/one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:id="@+id/exterior1"
                     android:fontFamily="@font/nunitobold"
                     android:textColor="@color/white"
-                    android:text="Прямо с завода" />
+                    android:text="@string/exterior" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <CheckBox
-                    android:id="@+id/second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Немного поношенное" />
-
-                <CheckBox
-                    android:id="@+id/third"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="После полевых испытаний" />
-
-                <CheckBox
-                    android:id="@+id/forth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Поношенное" />
-
-                <CheckBox
-                    android:id="@+id/fived"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Закаленное в боях" />
-
-                <CheckBox
-                    android:id="@+id/sexed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Не крашено" />
-            </LinearLayout>
-
-            <!-- Второй список (Качество) -->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:id="@+id/quality"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:paddingEnd="20dp">
 
-                <TextView
-                    android:id="@+id/text2"
-                    android:layout_width="wrap_content"
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:inputType="none"
+                    android:id="@+id/quality1"
                     android:fontFamily="@font/nunitobold"
                     android:textColor="@color/white"
-                    android:text="Качество:"
-                    android:textSize="20sp" />
+                    android:text="@string/quality" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <CheckBox
-                    android:id="@+id/seventh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Ширпотреб" />
-
-                <CheckBox
-                    android:id="@+id/eightth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Промышленное" />
-
-                <CheckBox
-                    android:id="@+id/nineth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Армейское" />
-
-                <CheckBox
-                    android:id="@+id/tenth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Запрещенное" />
-
-                <CheckBox
-                    android:id="@+id/eleventh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Засекреченное" />
-
-                <CheckBox
-                    android:id="@+id/twelveth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitobold"
-                    android:textColor="@color/white"
-                    android:text="Тайное" />
-            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

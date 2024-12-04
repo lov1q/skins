@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cs2_item_list">
+        <item>Galil AR</item>
+        <item>AK-47</item>
+        <item>AUG</item>
+        <item>FAMAS</item>
+        <item>M4A1-S</item>
+        <item>M4A4</item>
+        <item>SG 553</item>
+        <item>CZ75-Auto</item>
+        <item>Desert Eagle</item>
+        <item>Dual Berettas</item>
+        <item>Five-SeveN</item>
+        <item>Glock-18</item>
+        <item>P2000</item>
+        <item>P250</item>
+        <item>R8 Revolver</item>
+        <item>Tec-9</item>
+        <item>USP-S</item>
+        <item>Bayonet</item>
+        <item>Bowie Knife</item>
+        <item>Butterfly Knife</item>
+        <item>Classic Knife</item>
+        <item>Falchion Knife</item>
+        <item>Flip Knife</item>
+        <item>Gut Knife</item>
+        <item>Huntsman Knife</item>
+        <item>Karambit</item>
+        <item>Kukri Knife</item>
+        <item>M9 Bayonet</item>
+        <item>Navaja Knife</item>
+        <item>Nomad Knife</item>
+        <item>Paracord Knife</item>
+        <item>Shadow Daggers</item>
+        <item>Skeleton Knife</item>
+        <item>Stiletto Knife</item>
+        <item>Survival Knife</item>
+        <item>Talon Knife</item>
+        <item>Ursus Knife</item>
+        <item>AWP</item>
+        <item>G3SG1</item>
+        <item>SCAR-20</item>
+        <item>SSG 08</item>
+        <item>MAC-10</item>
+        <item>MP5-SD</item>
+        <item>MP7</item>
+        <item>MP9</item>
+        <item>P90</item>
+        <item>PP-Bizon</item>
+        <item>UMP-45</item>
+        <item>MAG-7</item>
+        <item>Nova</item>
+        <item>Sawed-Off</item>
+        <item>XM1014</item>
+        <item>M249</item>
+        <item>Negev</item>
+        <item>Bloodhound Gloves</item>
+        <item>Broken Fang Gloves</item>
+        <item>Driver Gloves</item>
+        <item>Hand Wraps</item>
+        <item>Hydra Gloves</item>
+        <item>Moto Gloves</item>
+        <item>Specialist Gloves</item>
+        <item>Sport Gloves</item>
+        <item>Zeus x27</item>
+    </string-array>
+</resources>

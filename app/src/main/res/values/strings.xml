@@ -13,6 +13,10 @@
     <string name="pass">Password</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
+    <string name="exterior">Износ</string>
+    <string name="type">Тип</string>
+    <string name="search">Поиск...</string>
+    <string name="quality">Качество</string>
     <string name="trade">Trade URL:</string>
     <string name="changeava">Change Avatar</string>
     <string name="send">Send</string>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_quality">
+        <item>Consumer Grade</item>
+        <item>Industrial Grade</item>
+        <item>Mil-Spec Grade</item>
+        <item>Restricted</item>
+        <item>Classified</item>
+        <item>Covert</item>
+        <item>Extraordinary</item>
+        <item>Remarkable</item>
+        <item>High Grade</item>
+        <item>Base Grade</item>
+        <item>Exotic</item>
+        <item>Superior</item>
+    </string-array>
+</resources>

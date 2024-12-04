@@ -2,41 +2,53 @@ package com.example.skins
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 
 class ShopFragment : Fragment() {
 
     private lateinit var autoCompleteTextView: AutoCompleteTextView
-    private lateinit var adapterItems: ArrayAdapter<String>
-
-
+    private lateinit var autoCompleteTextView1: AutoCompleteTextView
+    private lateinit var autoCompleteTextView2: AutoCompleteTextView
+    private lateinit var autoCompleteTextView3: AutoCompleteTextView
+    private lateinit var adapterType: ArrayAdapter<String>
+    private lateinit var adapterExteriors: ArrayAdapter<String>
+    private lateinit var adapterQualitys: ArrayAdapter<String>
+    private lateinit var adapterGuns: ArrayAdapter<String>
+    private var isLoading = false
+    private lateinit var skinsAdapter: AdapterSkins
+    private val datasett = arrayListOf<Skins>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Инфлейтим разметку фрагмента
         val view = inflater.inflate(R.layout.fragment_shop, container, false)
-        // Подготовка данных для адаптера
-        val dataset = buildList()
-        // Инициализация RecyclerView
         val recyclerView: RecyclerView = view.findViewById(R.id.recycleView)
-        // Устанавливаем GridLayoutManager с 2 столбцами
+
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = gridLayoutManager
-        // Подключаем адаптер
-        recyclerView.adapter = AdapterSkins(dataset)
-        // Добавляем отступы между элементами
-        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing) // Например, 16dp
+        skinsAdapter = AdapterSkins(datasett)
+        recyclerView.adapter = skinsAdapter
+
+        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing)
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
@@ -44,56 +56,145 @@ class ShopFragment : Fragment() {
                 parent: RecyclerView,
                 state: RecyclerView.State
             ) {
-                val position = parent.getChildAdapterPosition(view) // позиция элемента
-                val column = position % 2 // столбец (0 или 1)
+                val position = parent.getChildAdapterPosition(view)
+                val column = position % 2
+                outRect.left = spacing - column * spacing / 2
+                outRect.right = (column + 1) * spacing / 2
+                if (position < 2) outRect.top = spacing
+                outRect.bottom = spacing
+            }
+        })
 
-                val includeEdge = true
-                if (includeEdge) {
-                    outRect.left = spacing - column * spacing / 2
-                    outRect.right = (column + 1) * spacing / 2
-                    if (position < 2) { // верхний ряд
-                        outRect.top = spacing
-                    }
-                    outRect.bottom = spacing // отступ снизу
-                } else {
-                    outRect.left = column * spacing / 2
-                    outRect.right = spacing - (column + 1) * spacing / 2
-                    if (position >= 2) {
-                        outRect.top = spacing // отступ сверху
-                    }
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                val totalItemCount = layoutManager.itemCount
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                if (!isLoading && lastVisibleItemPosition >= totalItemCount - 1) {
+                    loadSkins()
                 }
             }
         })
+
+        loadSkins() // Загрузка первой страницы
         return view
     }
 
-    private fun buildList(): ArrayList<Skins> {
-        val list = arrayListOf<Skins>()
-        list.add(Skins(
-            R.drawable.tradeit,
-            "Tradeitt",
-            "https://tradeit.gg/ru/csgo/store",
-            "sdfsdf"
-        ))
-        list.add(Skins(
-            R.drawable.lisskins,
-            "Lis-skins",
-            "https://lis-skins.com/ru/market",
-            "dadasd"
-        ))
+    fun getSkinUrls(): List<String> {
+        val baseUrl = "https://steamcommunity.com/market/search/render/?search_descriptions=0&sort_column=default&sort_dir=desc&appid=730&norender=1"
+        val counts = listOf(500, 500, 500, 500) // Количество скинов для каждой ссылки
+        val starts = listOf(0, 500, 1000, 1500) // Позиции начала для каждой ссылки
 
-        return list
+        val urls = mutableListOf<String>()
+        for (i in counts.indices) {
+            val url = "$baseUrl&count=${counts[i]}&start=${starts[i]}"
+            urls.add(url)
+        }
+        return urls
+    }
+
+
+    private fun loadSkins() {
+        isLoading = true
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val urls = getSkinUrls() // Получаем список всех URL-ов
+                val allSkins = mutableListOf<Skins>()
+
+                for (url in urls) {
+                    val connection = URL(url).openConnection() as HttpURLConnection
+                    connection.requestMethod = "GET"
+
+                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                        val response = connection.inputStream.bufferedReader().use { it.readText() }
+                        Log.d("ShopFragment", "Response: $response")
+
+                        // Парсим полученные данные
+                        val skins = parseSkinsFromResponse(response)
+
+                        // Добавляем в общий список
+                        allSkins.addAll(skins)
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
+                            isLoading = false
+                        }
+                        return@launch // Прерываем выполнение, если ошибка загрузки
+                    }
+                }
+
+                withContext(Dispatchers.Main) {
+                    // Обновляем адаптер с новыми данными
+                    datasett.addAll(allSkins)
+                    skinsAdapter.notifyDataSetChanged()
+                    isLoading = false
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("ShopFragment", "Ошибка: $e")
+                    Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
+                    isLoading = false
+                }
+            }
+        }
+    }
+
+
+    private fun extractType(assetDescription: JSONObject): String {
+        return assetDescription.optString("type", "Unknown")
+    }
+
+    private fun parseSkinsFromResponse(response: String): List<Skins> {
+        val skins = arrayListOf<Skins>()
+        val jsonObject = JSONObject(response)
+        val results = jsonObject.getJSONArray("results")
+        for (i in 0 until results.length()) {
+            val item = results.getJSONObject(i)
+            val assetDescription = item.optJSONObject("asset_description") ?: continue
+
+            val title = item.optString("name", "Unknown Item")
+            val exterior = extractType(assetDescription)
+            val cost = item.optString("sale_price_text", "N/A")
+            skins.add(Skins(R.drawable.cssss, title, exterior, cost))
+        }
+        return skins
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Данные для AutoCompleteTextView
-        val items = arrayOf("Material", "Design", "Components", "Android", "5.0 Lollipop")
-        // Инициализируем AutoCompleteTextView
-        autoCompleteTextView = view.findViewById(R.id.collection2)
-        // Создаем адаптер
-        adapterItems = ArrayAdapter(requireContext(), R.layout.dropdown_item, items)
-        // Привязываем адаптер к AutoCompleteTextView
-        autoCompleteTextView.setAdapter(adapterItems)
+        val typeItems = resources.getStringArray(R.array.dropdown_items)
+        val gunsItems = resources.getStringArray(R.array.cs2_item_list)
+        val exteriorItems = resources.getStringArray(R.array.item_exteriors)
+        val qualityItems = resources.getStringArray(R.array.item_quality)
+        autoCompleteTextView = view.findViewById(R.id.collection1)
+        autoCompleteTextView1 = view.findViewById(R.id.gun1)
+        autoCompleteTextView2 = view.findViewById(R.id.exterior1)
+        autoCompleteTextView3 = view.findViewById(R.id.quality1)
+        adapterType = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_item,
+            typeItems
+        )
+        adapterGuns = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_item,
+            gunsItems
+        )
+        adapterExteriors = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_item,
+            exteriorItems
+        )
+        adapterQualitys = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_item,
+            qualityItems
+        )
+        autoCompleteTextView.setAdapter(adapterType)
+        autoCompleteTextView1.setAdapter(adapterGuns)
+        autoCompleteTextView2.setAdapter(adapterExteriors)
+        autoCompleteTextView3.setAdapter(adapterQualitys)
     }
 }

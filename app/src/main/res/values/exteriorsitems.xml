@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_exteriors">
+        <item>Battle scarred</item>
+        <item>Well-worn</item>
+        <item>Field tested</item>
+        <item>Minimal wear</item>
+        <item>Factory new</item>
+    </string-array>
+</resources>
