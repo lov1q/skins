@@ -28,18 +28,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunitobold"
-            android:text="LoviCS"
+            android:text="@string/lovics"
             android:textColor="@color/white"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunitobold"
-            android:text="CS2 skin store"
+            android:text="@string/CS2"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -47,10 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Registration"
+        android:text="@string/registration"
         android:fontFamily="@font/nunitobold"
-        android:textColor="@color/black"
-        android:textSize="24dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textFieldlogin"
         app:layout_constraintEnd_toEndOf="@+id/textFieldlogin"
         app:layout_constraintHorizontal_bias="0.495"
@@ -64,13 +64,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="280dp"
-        android:hint="Login"
+        android:textColorHint="@color/white"
+        android:hint="@string/login"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:id="@+id/login"
+            android:textColor="@color/white"
+            android:textSize="23sp"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -83,13 +86,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textFieldlogin"
         app:layout_constraintStart_toStartOf="@id/textFieldlogin"
-        android:hint="Email"
+        android:hint="@string/email"
+        android:textColorHint="@color/white"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:id="@+id/email"
+            android:textColor="@color/white"
+            android:textSize="23sp"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -102,13 +108,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textFieldEmail"
         app:layout_constraintStart_toStartOf="@id/textFieldEmail"
-        android:hint="Password"
+        android:hint="@string/pass"
+        android:textColorHint="@color/white"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="23sp"
+            android:inputType="textPassword"
+            android:id="@+id/password"
+            android:textColor="@color/white"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -121,13 +131,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textFieldPassword"
         app:layout_constraintStart_toStartOf="@id/textFieldPassword"
-        android:hint="Confirm password"
+        android:hint="@string/passconf"
+        android:textColorHint="@color/white"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="23sp"
+            android:inputType="textPassword"
+            android:id="@+id/confpassword"
+            android:textColor="@color/white"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -138,7 +152,8 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:text="Sign Up"
+        android:id="@+id/signup"
+        android:text="@string/signup"
         android:fontFamily="@font/nunitobold"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/textFieldSecPassword"
@@ -151,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Back"
+        android:text="@string/back"
         android:fontFamily="@font/nunitobold"
         android:onClick="back"
         android:textAllCaps="false"

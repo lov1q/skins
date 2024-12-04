@@ -28,18 +28,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunitobold"
-            android:text="LoviCS"
+            android:text="@string/lovics"
             android:textColor="@color/white"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunitobold"
-            android:text="CS2 skin store"
+            android:text="@string/CS2"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -47,10 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Authorization"
-        android:textColor="@color/black"
+        android:text="@string/autor"
+        android:textColor="@color/white"
         android:fontFamily="@font/nunitobold"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textFieldlogin"
         app:layout_constraintEnd_toEndOf="@+id/textFieldlogin"
         app:layout_constraintHorizontal_bias="0.495"
@@ -60,17 +60,20 @@
         android:id="@+id/textFieldlogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="280dp"
-        android:hint="Login"
+        android:hint="@string/email"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="23sp"
+            android:id="@+id/login"
+            android:textColor="@color/white"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -81,15 +84,19 @@
         android:id="@+id/textFieldpassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
         app:layout_constraintTop_toBottomOf="@id/textFieldlogin"
         app:layout_constraintStart_toStartOf="@id/textFieldlogin"
-        android:hint="Password"
+        android:hint="@string/pass"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="23sp"
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:fontFamily="@font/nunitobold"
             android:imeOptions="actionDone"
             android:singleLine="true">
@@ -103,12 +110,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:onClick="onClick"
-        android:text="Sign In"
+        android:text="@string/signin"
         android:fontFamily="@font/nunitobold"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textFieldpassword"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="@+id/textFieldpassword"
@@ -119,10 +125,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
-        android:text="Don`t have an account?"
+        android:text="@string/nothaveacc"
         android:fontFamily="@font/nunitobold"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="@+id/button"
@@ -133,7 +139,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Sign Up Now"
+        android:text="@string/signupnow"
         android:fontFamily="@font/nunitobold"
         android:textAllCaps="false"
         android:textColor="@color/white"
