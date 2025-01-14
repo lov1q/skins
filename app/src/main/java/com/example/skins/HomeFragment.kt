@@ -117,50 +117,43 @@ class HomeFragment : Fragment() {
     }
 
     // Функция для получения Permanent ID из Firebase
-    private fun getPermanentIdFromFirebase() {
+    private suspend fun getPermanentIdFromFirebase(): String? {
+        val userId = auth.currentUser?.uid ?: return null
         val db = Firebase.firestore
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (userId != null) {
-            db.collection("Permanent ID")
-                .whereEqualTo("userID", userId) // Фильтрация по UID пользователя
+        return try {
+            val querySnapshot = db.collection("Permanent ID")
+                .whereEqualTo("User", userId)
                 .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        permanentId = document.getString("permanentID") // Сохраняем Permanent ID
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("ShopFragment", "Error getting documents.", exception)
-                }
+                .await()
+
+            if (!querySnapshot.isEmpty) {
+                querySnapshot.documents[0].getString("Permanent ID")
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Ошибка получения Permanent ID: $e")
+            null
         }
     }
-
-
 
     private fun loadSkins() {
         isLoading = true
         lifecycleScope.launch {
             try {
-                // Получаем Permanent ID (ссылка на инвентарь)
                 val permanentId = getPermanentIdFromFirebase()
 
                 if (permanentId != null) {
                     val url = "https://steamcommunity.com/inventory/$permanentId/730/2"
-                    // Открываем подключение по URL
-                    val connection = URL(url).openConnection() as HttpURLConnection
-                    connection.requestMethod = "GET"
+                    val response = withContext(Dispatchers.IO) {
+                        fetchSkinsData(url)
+                    }
 
-                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                        val response = connection.inputStream.bufferedReader().use { it.readText() }
-                        Log.d("ShopFragment", "Response: $response")
-
-                        // Парсим полученные данные
+                    if (response != null) {
                         val skins = parseSkinsFromResponse(response)
-
-                        // Обновляем UI с результатами
                         withContext(Dispatchers.Main) {
-                            datasett.addAll(skins) // Убедитесь, что datasett соответствует типу данных
+                            datasett.addAll(skins)
                             skinsAdapter.notifyDataSetChanged()
                             isLoading = false
                         }
@@ -178,13 +171,29 @@ class HomeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Log.e("ShopFragment", "Ошибка: $e")
+                    Log.e(TAG, "Ошибка: $e")
                     Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
                     isLoading = false
                 }
             }
         }
     }
+
+    private suspend fun fetchSkinsData(url: String): String? {
+        return try {
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                connection.inputStream.bufferedReader().use { it.readText() }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Ошибка подключения: $e")
+            null
+        }
+    }
+
 
     private fun parseSkinsFromResponse(response: String): List<YourinventClass> {
         val skins = arrayListOf<YourinventClass>()
@@ -249,32 +258,58 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun addUrl(){
-        val userId = auth.currentUser?.uid
+    private fun addUrl() {
+        val userId = auth.currentUser?.uid ?: return
         val email = Firebase.auth.currentUser?.email
         val permID = perID.text.toString().trim()
+
         if (permID.isEmpty()) {
             perID.error = "Permanent ID не может быть пустым"
             return
         }
+
         val db = Firebase.firestore
         auth = Firebase.auth
+
         val user = hashMapOf(
             "Email" to email,
             "Permanent ID" to permID,
             "User" to userId
         )
+
+        // Проверка на существующий Permanent ID
         db.collection("Permanent ID")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                Toast.makeText(context, "Permanent ID добавлен успешно", Toast.LENGTH_SHORT).show()
+            .whereEqualTo("User", userId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    // Обновляем существующий документ
+                    val documentId = querySnapshot.documents[0].id
+                    db.collection("Permanent ID").document(documentId)
+                        .set(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Permanent ID обновлен", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Ошибка обновления: $e")
+                        }
+                } else {
+                    // Добавляем новый документ
+                    db.collection("Permanent ID")
+                        .add(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Permanent ID добавлен", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Ошибка добавления: $e")
+                        }
+                }
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-                Toast.makeText(context, "Ошибка добавления Permanent ID", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Ошибка проверки существующего ID: $e")
             }
     }
+
 
 
 }
