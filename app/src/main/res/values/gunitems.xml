@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cs2_item_list">
+        <item>All</item>
         <item>Galil AR</item>
         <item>AK-47</item>
         <item>AUG</item>

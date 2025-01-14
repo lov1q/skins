@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="item_exteriors">
+        <item>None</item>
         <item>Battle scarred</item>
         <item>Well-worn</item>
         <item>Field tested</item>

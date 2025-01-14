@@ -1,7 +1,10 @@
 package com.example.skins
 
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +17,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -73,63 +83,71 @@ class ShopFragment : Fragment() {
                 val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
 
                 if (!isLoading && lastVisibleItemPosition >= totalItemCount - 1) {
-                    loadSkins()
+                    recyclerView.post { // Используем post для отложенного выполнения
+                        loadSkins()
+                    }
                 }
             }
         })
 
-        loadSkins() // Загрузка первой страницы
+        val textInputLayout: TextInputLayout = view.findViewById(R.id.textField)
+        val textInputEditText: TextInputEditText = textInputLayout.editText as TextInputEditText
+
+        textInputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.let { searchSkinsByName(it.toString()) } // Вызываем поиск при каждом изменении текста
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        loadSkins()
         return view
     }
 
-    fun getSkinUrls(): List<String> {
-        val counts = listOf(500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500) // Количество скинов для каждой ссылки
-        val starts = listOf(0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000) // Позиции начала для каждой ссылки
-        //val baseUrl = "https://steamcommunity.com/market/search/render/?search_descriptions=0&sort_column=default&sort_dir=desc&appid=730&norender=1"
-        val baseUrl = "https://steamcommunity.com/market/search/render/?start=$starts&count=$counts&appid=730&norender=1"
+    private var cachedSkinUrls: List<String>? = null
 
-
-        val urls = mutableListOf<String>()
-        for (i in counts.indices) {
-            val url = "$baseUrl&count=${counts[i]}&start=${starts[i]}"
-            urls.add(url)
+    private fun getSkinUrls(): List<String> {
+        if (cachedSkinUrls == null) {
+            cachedSkinUrls = (0..5000 step 500).map { start ->
+                "https://steamcommunity.com/market/search/render/?start=$start&count=500&appid=730&norender=1"
+            }
+            Log.d("ShopFragment", "Список URL создан: $cachedSkinUrls")
         }
-        return urls
+        return cachedSkinUrls!!
     }
 
 
+
+
     private fun loadSkins() {
+        val cachedSkins = loadSkinsFromPreferences()
+
+        if (cachedSkins != null) {
+            Log.d("ShopFragment", "Загружаем данные из SharedPreferences")
+            originalSkinsList.addAll(cachedSkins)
+            skinsAdapter.notifyDataSetChanged()
+            return
+        }
+
+        Log.d("ShopFragment", "Данные не найдены, выполняем запросы")
         isLoading = true
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val urls = getSkinUrls() // Получаем список всех URL-ов
-                val allSkins = mutableListOf<Skins>()
-
-                for (url in urls) {
-                    val connection = URL(url).openConnection() as HttpURLConnection
-                    connection.requestMethod = "GET"
-
-                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                        val response = connection.inputStream.bufferedReader().use { it.readText() }
-                        Log.d("ShopFragment", "Response: $response")
-
-                        // Парсим полученные данные
-                        val skins = parseSkinsFromResponse(response)
-
-                        // Добавляем в общий список
-                        allSkins.addAll(skins)
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
-                            isLoading = false
-                        }
-                        return@launch // Прерываем выполнение, если ошибка загрузки
+                val urls = getSkinUrls()
+                val deferredSkins = urls.mapIndexed { index, url ->
+                    async {
+                        if (index > 0) delay(7000)
+                        loadSkinData(url)
                     }
                 }
+                val allSkins = deferredSkins.awaitAll().flatten()
 
                 withContext(Dispatchers.Main) {
-                    // Обновляем адаптер с новыми данными
                     originalSkinsList.addAll(allSkins)
+                    saveSkinsToPreferences(allSkins)
                     skinsAdapter.notifyDataSetChanged()
                     isLoading = false
                 }
@@ -142,6 +160,25 @@ class ShopFragment : Fragment() {
             }
         }
     }
+
+
+
+
+    private fun loadSkinData(url: String): List<Skins> {
+        val connection = URL(url).openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+
+        return if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+            val response = connection.inputStream.bufferedReader().use { it.readText() }
+            Log.d("ShopFragment", "Response from $url: $response")
+            parseSkinsFromResponse(response)
+        } else {
+            Log.e("ShopFragment", "Error fetching data from $url. Response code: ${connection.responseCode}")
+            emptyList()
+        }
+    }
+
+
 
 
     private fun extractType(assetDescription: JSONObject): String {
@@ -167,32 +204,74 @@ class ShopFragment : Fragment() {
         return skins
     }
 
-    private fun searchShop(){
-
-    }
-
-    private fun filterSkinsByType(selectedType: String) {
-        // Если выбрано "Все категории", показываем весь список скинов
-        if (selectedType == "All") {
+    private fun searchSkinsByName(query: String) {
+        // Если запрос пустой, показываем весь список
+        if (query.isEmpty()) {
             skinsAdapter.updateList(originalSkinsList) // Показываем весь список
             return
         }
 
-        // Фильтруем список скинов по ключевому слову, которое выбрал пользователь
+        // Фильтруем список по названию
         val filteredList = originalSkinsList.filter { skin ->
-            // Ищем выбранное ключевое слово в строке типа скина
-            val skinType = skin.dataType
-
-            // Проверяем, содержится ли выбранное ключевое слово в строке типа скина (не зависит от позиции)
-            skinType.contains(selectedType, ignoreCase = true) // игнорируем регистр
+            skin.dataTitle.contains(query, ignoreCase = true) // Игнорируем регистр
         }
 
         // Обновляем адаптер с отфильтрованными данными
-        skinsAdapter.updateList(ArrayList(filteredList)) // Здесь мы обновляем список, а не добавляем элементы
+        skinsAdapter.updateList(ArrayList(filteredList))
     }
 
 
+    private fun filterSkinsByType(selectedType: String) {
+        if (selectedType == "All") {
+            skinsAdapter.updateList(originalSkinsList)
+            return
+        }
+        val filteredList = originalSkinsList.filter { skin ->
+            val skinType = skin.dataType
+            skinType.contains(selectedType, ignoreCase = true)
+        }
+        skinsAdapter.updateList(ArrayList(filteredList))
+    }
 
+    private fun filterSkinsByExterior(selectedExterior: String) {
+        if (selectedExterior == "None") {
+            skinsAdapter.updateList(originalSkinsList)
+            return
+        }
+        val filteredList = originalSkinsList.filter { skin ->
+            val skinExterior = skin.dataTitle
+            skinExterior.contains(selectedExterior, ignoreCase = true)
+        }
+        Log.e("ggg", filteredList.toString())
+        skinsAdapter.updateList(ArrayList(filteredList))
+    }
+
+    private fun filterSkinsByGun(selectedGun: String) {
+        if (selectedGun == "None") {
+            skinsAdapter.updateList(originalSkinsList)
+            return
+        }
+        val filteredList = originalSkinsList.filter { skin ->
+            val skinGun = skin.dataTitle
+            skinGun.contains(selectedGun, ignoreCase = true)
+        }
+        Log.e("ggg", filteredList.toString())
+        skinsAdapter.updateList(ArrayList(filteredList))
+    }
+
+    private fun filterSkinsByQualitys(selectedQuality: String) {
+        if (selectedQuality == "All") {
+            skinsAdapter.updateList(originalSkinsList)
+            return
+        }
+        val filteredList = originalSkinsList.filter { skin ->
+            val skinQuality = skin.dataType
+
+            skinQuality.contains(selectedQuality, ignoreCase = true)
+        }
+        Log.e("ggg", filteredList.toString())
+        skinsAdapter.updateList(ArrayList(filteredList))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -230,8 +309,45 @@ class ShopFragment : Fragment() {
         autoCompleteTextView3.setAdapter(adapterQualitys)
 
         autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-            val selectedType = typeItems[position] // Получаем выбранный тип
-            filterSkinsByType(selectedType) // Вызываем фильтрацию
+            val selectedType = typeItems[position]
+            filterSkinsByType(selectedType)
+        }
+        autoCompleteTextView2.setOnItemClickListener { _, _, position, _ ->
+            val selectedExterior = exteriorItems[position]
+            filterSkinsByExterior(selectedExterior)
+        }
+        autoCompleteTextView1.setOnItemClickListener { _, _, position, _ ->
+            val selectedGun = gunsItems[position]
+            filterSkinsByGun(selectedGun)
+        }
+        autoCompleteTextView3.setOnItemClickListener { _, _, position, _ ->
+            val selectedQuality = qualityItems[position]
+            filterSkinsByQualitys(selectedQuality)
         }
     }
+
+    private fun saveSkinsToPreferences(skins: List<Skins>) {
+        val sharedPreferences = requireContext().getSharedPreferences("skins_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val json = Gson().toJson(skins)
+        editor.putString("skins_list", json)
+        editor.apply()
+    }
+
+    private fun loadSkinsFromPreferences(): List<Skins>? {
+        val sharedPreferences = requireContext().getSharedPreferences("skins_prefs", Context.MODE_PRIVATE)
+        val json = sharedPreferences.getString("skins_list", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<Skins>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            null
+        }
+    }
+
+    private fun clearSkinsFromPreferences() {
+        val sharedPreferences = requireContext().getSharedPreferences("skins_prefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().remove("skins_list").apply()
+    }
+
 }
