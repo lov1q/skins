@@ -1,20 +1,34 @@
 package com.example.skins
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class AdapterSkins (private val dataList: ArrayList<Skins>): RecyclerView.Adapter<AdapterSkins.ViewHolderClass>() {
 
 
+    // Метод для обновления данных
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: ArrayList<Skins>) {
+        dataList.clear()
+        dataList.addAll(newList)
+        notifyDataSetChanged() // Уведомляем RecyclerView об изменениях
+    }
+
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
-        holder.rvImage.setImageResource(currentItem.dataImage)
+        Glide.with(holder.rvImage.context)
+            .load(currentItem.dataImage) // Здесь передаётся строка URL
+            .placeholder(R.drawable.cssss) // Заглушка, пока изображение загружается
+            .error(R.drawable.vnimanie) // Изображение при ошибке
+            .into(holder.rvImage) // ImageView, куда загружается изображение
         holder.rvTitle.text = currentItem.dataTitle
-        holder.rvLink.text = currentItem.dataExterior
+        holder.rvLink.text = currentItem.dataType
         holder.rvCost.text = currentItem.dataCost
     }
 

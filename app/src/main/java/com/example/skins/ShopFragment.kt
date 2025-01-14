@@ -33,7 +33,7 @@ class ShopFragment : Fragment() {
     private lateinit var adapterGuns: ArrayAdapter<String>
     private var isLoading = false
     private lateinit var skinsAdapter: AdapterSkins
-    private val datasett = arrayListOf<Skins>()
+    private val originalSkinsList = arrayListOf<Skins>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +45,7 @@ class ShopFragment : Fragment() {
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = gridLayoutManager
-        skinsAdapter = AdapterSkins(datasett)
+        skinsAdapter = AdapterSkins(originalSkinsList)
         recyclerView.adapter = skinsAdapter
 
         val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing)
@@ -83,9 +83,11 @@ class ShopFragment : Fragment() {
     }
 
     fun getSkinUrls(): List<String> {
-        val baseUrl = "https://steamcommunity.com/market/search/render/?search_descriptions=0&sort_column=default&sort_dir=desc&appid=730&norender=1"
-        val counts = listOf(500, 500, 500, 500) // Количество скинов для каждой ссылки
-        val starts = listOf(0, 500, 1000, 1500) // Позиции начала для каждой ссылки
+        val counts = listOf(500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500) // Количество скинов для каждой ссылки
+        val starts = listOf(0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000) // Позиции начала для каждой ссылки
+        //val baseUrl = "https://steamcommunity.com/market/search/render/?search_descriptions=0&sort_column=default&sort_dir=desc&appid=730&norender=1"
+        val baseUrl = "https://steamcommunity.com/market/search/render/?start=$starts&count=$counts&appid=730&norender=1"
+
 
         val urls = mutableListOf<String>()
         for (i in counts.indices) {
@@ -127,7 +129,7 @@ class ShopFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     // Обновляем адаптер с новыми данными
-                    datasett.addAll(allSkins)
+                    originalSkinsList.addAll(allSkins)
                     skinsAdapter.notifyDataSetChanged()
                     isLoading = false
                 }
@@ -149,6 +151,7 @@ class ShopFragment : Fragment() {
     private fun parseSkinsFromResponse(response: String): List<Skins> {
         val skins = arrayListOf<Skins>()
         val jsonObject = JSONObject(response)
+        val startUrl = "https://community.cloudflare.steamstatic.com/economy/image/"
         val results = jsonObject.getJSONArray("results")
         for (i in 0 until results.length()) {
             val item = results.getJSONObject(i)
@@ -157,10 +160,39 @@ class ShopFragment : Fragment() {
             val title = item.optString("name", "Unknown Item")
             val exterior = extractType(assetDescription)
             val cost = item.optString("sale_price_text", "N/A")
-            skins.add(Skins(R.drawable.cssss, title, exterior, cost))
+            val image = assetDescription.optString("icon_url","N/A")
+            val fullimage = "$startUrl$image"
+            skins.add(Skins(fullimage, title, exterior, cost))
         }
         return skins
     }
+
+    private fun searchShop(){
+
+    }
+
+    private fun filterSkinsByType(selectedType: String) {
+        // Если выбрано "Все категории", показываем весь список скинов
+        if (selectedType == "All") {
+            skinsAdapter.updateList(originalSkinsList) // Показываем весь список
+            return
+        }
+
+        // Фильтруем список скинов по ключевому слову, которое выбрал пользователь
+        val filteredList = originalSkinsList.filter { skin ->
+            // Ищем выбранное ключевое слово в строке типа скина
+            val skinType = skin.dataType
+
+            // Проверяем, содержится ли выбранное ключевое слово в строке типа скина (не зависит от позиции)
+            skinType.contains(selectedType, ignoreCase = true) // игнорируем регистр
+        }
+
+        // Обновляем адаптер с отфильтрованными данными
+        skinsAdapter.updateList(ArrayList(filteredList)) // Здесь мы обновляем список, а не добавляем элементы
+    }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -196,5 +228,10 @@ class ShopFragment : Fragment() {
         autoCompleteTextView1.setAdapter(adapterGuns)
         autoCompleteTextView2.setAdapter(adapterExteriors)
         autoCompleteTextView3.setAdapter(adapterQualitys)
+
+        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+            val selectedType = typeItems[position] // Получаем выбранный тип
+            filterSkinsByType(selectedType) // Вызываем фильтрацию
+        }
     }
 }
